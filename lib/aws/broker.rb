@@ -6,12 +6,12 @@ module Aws
   class Broker
     class << self
 
-      def publish(topic, message)
-        Publisher.new(topic, message).publish
+      def publish(*params)
+        Publisher.new(*params).publish
       end
 
-      def subscribe(topic)
-        Subscriber.new(topic).subscribe
+      def subscribe(*params)
+        Subscriber.new(*params).subscribe
       end
 
       def config

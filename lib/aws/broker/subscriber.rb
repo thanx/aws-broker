@@ -4,8 +4,9 @@ module Aws
   class Broker
     class Subscriber < Base
 
-      def initialize(topic)
+      def initialize(topic, queue=nil)
         @topic = topic
+        @queue = queue || queue_name
       end
 
       def subscribe
@@ -22,9 +23,17 @@ module Aws
 
     private
 
+      def queue_name
+        if Broker.config.queue_prefix
+          "#{Broker.config.queue_prefix}-#{@topic}"
+        else
+          @topic
+        end
+      end
+
       def create_queue
         @queue_url = sqs.create_queue(
-          queue_name: "broker-demo-#{@topic}"
+          queue_name: @queue
         ).queue_url
         @queue_arn = sqs.get_queue_attributes(
           queue_url:       @queue_url,
