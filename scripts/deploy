@@ -1,0 +1,5 @@
+#!/bin/bash
+rm aws-broker-*.gem 2>/dev/null
+gem build aws-broker.gemspec
+gem push aws-broker-*.gem
+open https://rubygems.org/gems/aws-broker
