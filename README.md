@@ -23,6 +23,32 @@ Usage:
     Broker.subscribe(topic, queue)
     Broker.publish(topic, message)
 
+### Configuration
+
+#### Broker Options
+
+Aws::Broker can be configured via the following:
+
+    Aws::Broker.configure do |config|
+      config.enabled      = false
+      config.queue_prefix = 'prefix'
+    end
+
+The following options are available:
+
+| Option         | Default | Description                                      |
+|----------------|---------|--------------------------------------------------|
+| `enabled`      | true    | if false, don't trigger API calls to AWS         |
+| `queue_prefix` | nil     | prefix for default queue name (prefix-topic)     |
+
+#### AWS Client
+
+[Configuring the AWS SDK for Ruby](http://docs.aws.amazon.com/sdk-for-ruby/v3/developer-guide/setup-config.html)
+
+* `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION` env variables
+* ~/.aws/credentials file
+* Aws.config[:credentials]
+
 ### Inspiration
 
 * [propono](https://github.com/iHiD/propono)
