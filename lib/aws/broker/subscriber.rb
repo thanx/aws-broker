@@ -54,26 +54,26 @@ module Aws
 
       def policy
         <<-POLICY
-{
-  "Version": "2008-10-17",
-  "Id": "#{@queue_arn}/SQSDefaultPolicy",
-  "Statement": [
-    {
-      "Sid": "#{@queue_arn}-Sid",
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "*"
-      },
-      "Action": "SQS:*",
-      "Resource": "#{@queue_arn}",
-      "Condition": {
-        "StringEquals": {
-          "aws:SourceArn": "#{@topic_arn}"
-        }
-      }
-    }
-  ]
-}
+          {
+            "Version": "2008-10-17",
+            "Id": "#{@queue_arn}/SQSDefaultPolicy",
+            "Statement": [
+              {
+                "Sid": "#{@queue_arn}-Sid",
+                "Effect": "Allow",
+                "Principal": {
+                  "AWS": "*"
+                },
+                "Action": "SQS:*",
+                "Resource": "#{@queue_arn}",
+                "Condition": {
+                  "StringEquals": {
+                    "aws:SourceArn": "#{@topic_arn}"
+                  }
+                }
+              }
+            ]
+          }
         POLICY
       end
 
