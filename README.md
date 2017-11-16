@@ -22,3 +22,9 @@ Usage:
     message = { id: 0 }
     Broker.subscribe(topic, queue)
     Broker.publish(topic, message)
+
+### Inspiration
+
+* [propono](https://github.com/iHiD/propono)
+* [shoryuken](https://github.com/phstc/shoryuken)
+* [bunny](https://github.com/ruby-amqp/bunny)
