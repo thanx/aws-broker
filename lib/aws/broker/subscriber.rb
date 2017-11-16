@@ -44,7 +44,7 @@ module Aws
       def set_queue_policy
         sqs.set_queue_attributes(
           queue_url:  @queue_url,
-          attributes: { "Policy": policy }
+          attributes: { 'Policy': policy }
         )
       end
 
