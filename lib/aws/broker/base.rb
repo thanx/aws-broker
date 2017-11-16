@@ -5,7 +5,7 @@ module Aws
     private
 
       def enabled?
-        Broker.config.enabled?
+        config.enabled?
       end
 
       def create_topic
@@ -18,10 +18,14 @@ module Aws
 
       def credentials
         {
-          access_key_id:     ENV['AWS_ACCESS_KEY'],
-          secret_access_key: ENV['AWS_SECRET_KEY'],
-          region:            ENV['AWS_REGION']
+          access_key_id:     config.aws_access_key,
+          secret_access_key: config.aws_secret_key,
+          region:            config.aws_region
         }
+      end
+
+      def config
+        Broker.config
       end
 
     end

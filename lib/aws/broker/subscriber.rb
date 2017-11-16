@@ -24,8 +24,8 @@ module Aws
     private
 
       def queue_name
-        if Broker.config.queue_prefix
-          "#{Broker.config.queue_prefix}-#{@topic}"
+        if config.queue_prefix
+          "#{config.queue_prefix}-#{@topic}"
         else
           @topic
         end
