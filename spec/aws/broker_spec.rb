@@ -58,4 +58,18 @@ describe Aws::Broker do
     end
   end
 
+  context '.config' do
+    it 'is memoized' do
+      expect(described_class.config).to eq(described_class.config)
+    end
+  end
+
+  context '.configure' do
+    it 'yields config' do
+      described_class.configure do |config|
+        expect(config).to eq(described_class.config)
+      end
+    end
+  end
+
 end
