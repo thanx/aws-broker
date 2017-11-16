@@ -12,6 +12,10 @@ This lightweight abstraction simplifies pub-sub on AWS's SNS and SQS services.
 Message processing is not part of this gem - we recommend using
 [Shoryuken](https://github.com/phstc/shoryuken) in addition to this gem.
 
+### Installation
+
+    gem 'aws-broker'
+
 ### Usage
 
     Broker = Aws::Broker
@@ -49,11 +53,17 @@ The following options are available:
 
 #### AWS Client
 
+AWS Broker wraps the AWS SQS and SNS clients. All configuration is the same as
+the AWS SDK. See
 [Configuring the AWS SDK for Ruby](http://docs.aws.amazon.com/sdk-for-ruby/v3/developer-guide/setup-config.html)
+for details.
+
+Some supported options:
 
 * `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION` env variables
-* ~/.aws/credentials file
-* Aws.config[:credentials]
+* shared `~/.aws/credentials` file
+* IAM
+* `Aws.config[:credentials]`
 
 ### Inspiration
 
