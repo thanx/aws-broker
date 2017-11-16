@@ -1,5 +1,5 @@
 # AWS Broker
 
-Lightweight Ruby pub-sub abstraction on AWS
+:incoming_envelope: Ruby pub-sub on AWS
 
 * * *
