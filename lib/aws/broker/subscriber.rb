@@ -12,6 +12,7 @@ module Aws
       def subscribe
         return unless enabled?
         create_queue
+        find_queue_arn
         create_topic
         sns.subscribe(
           topic_arn: @topic_arn,
@@ -35,6 +36,9 @@ module Aws
         @queue_url = sqs.create_queue(
           queue_name: @queue
         ).queue_url
+      end
+
+      def find_queue_arn
         @queue_arn = sqs.get_queue_attributes(
           queue_url:       @queue_url,
           attribute_names: ['QueueArn']
