@@ -9,9 +9,6 @@ module Aws
       def initialize
         self.enabled        = true
         self.queue_prefix   = nil
-        self.aws_access_key = nil
-        self.aws_secret_key = nil
-        self.aws_region     = nil
       end
 
     end

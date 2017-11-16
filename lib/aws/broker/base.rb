@@ -13,15 +13,7 @@ module Aws
       end
 
       def sns
-        @sns ||= Aws::SNS::Client.new(credentials)
-      end
-
-      def credentials
-        {
-          access_key_id:     config.aws_access_key,
-          secret_access_key: config.aws_secret_key,
-          region:            config.aws_region
-        }
+        @sns ||= Aws::SNS::Client.new
       end
 
       def config

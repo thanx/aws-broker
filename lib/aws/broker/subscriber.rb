@@ -74,7 +74,7 @@ module Aws
       end
 
       def sqs
-        @sqs ||= Aws::SQS::Client.new(credentials)
+        @sqs ||= Aws::SQS::Client.new
       end
 
     end
