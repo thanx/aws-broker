@@ -14,11 +14,7 @@ describe Aws::Broker do
   let(:publisher) { described_class::Publisher }
   let(:subscriber) { described_class::Subscriber }
 
-  before do
-    described_class.configure do |config|
-      config.enabled = false
-    end
-  end
+  before { Aws::Broker.config.enabled = false }
 
   context '.publish' do
     let(:params) { [ topic, message ] }
