@@ -1,4 +1,4 @@
-module AWS
+module Aws
   class Broker
 
     VERSION = '0.0.1'.freeze
