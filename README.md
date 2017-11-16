@@ -1,8 +1,10 @@
-# AWS Broker
+# AWS Broker [![Gem Version](https://badge.fury.io/rb/aws-broker.svg)](https://badge.fury.io/rb/aws-broker)
 
 :incoming_envelope: Ruby pub-sub on AWS
 
 * * *
+
+[![CircleCI](https://circleci.com/gh/Thanx/aws-broker.svg?style=svg)](https://circleci.com/gh/Thanx/aws-broker)
 
 ### Background
 
