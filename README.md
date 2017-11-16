@@ -14,13 +14,19 @@ Message processing is not part of this gem - we recommend using
 
 ### Usage
 
-Usage:
-
     Broker = Aws::Broker
     topic = 'topic'
     queue = 'queue'
     message = { id: 0 }
+
+    # subscribe topic to specified queue
     Broker.subscribe(topic, queue)
+
+    # subscribe topic to default queue
+    #   "topic" or "prefix-topic" (see options)
+    Broker.subscribe(topic)
+
+    # publish message to topic
     Broker.publish(topic, message)
 
 ### Configuration
