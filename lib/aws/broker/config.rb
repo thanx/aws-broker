@@ -3,7 +3,6 @@ module Aws
     class Config
 
       attr_accessor :enabled, :queue_prefix
-      attr_accessor :aws_access_key, :aws_secret_key, :aws_region
       alias_method :enabled?, :enabled
 
       def initialize
