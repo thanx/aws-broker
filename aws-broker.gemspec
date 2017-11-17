@@ -4,7 +4,7 @@ require "aws/broker/constants"
 
 Gem::Specification.new do |s|
   s.name        = 'aws-broker'
-  s.version     = AWS::Broker::VERSION
+  s.version     = Aws::Broker::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['Eng @ Thanx']
   s.email       = 'eng@thanx.com'
