@@ -1,4 +1,0 @@
-#!/bin/bash
-rm aws-broker-*.gem 2>/dev/null
-gem build aws-broker.gemspec
-gem install aws-broker-*.gem
