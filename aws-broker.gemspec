@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = 'eng@thanx.com'
   s.homepage    = 'https://github.com/thanx/aws-broker'
   s.summary     = 'AWS Broker'
-  s.description = 'Lightweight Ruby pub-sub abstraction on AWS'
+  s.description = 'Ruby pub-sub on AWS'
   s.license     = 'MIT'
 
   s.files       = Dir.glob("lib/**/*") + %w(README.md)
