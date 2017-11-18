@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
+$:.push File.expand_path('../lib', __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = 'aws-broker'
@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.description = 'Ruby pub-sub on AWS'
   s.license     = 'MIT'
 
-  s.files       = Dir.glob("lib/**/*") + %w(README.md)
+  s.files       = Dir.glob('lib/**/*') + %w(README.md)
   s.require_paths = ['lib']
 
   s.add_dependency 'aws-sdk-sns'
