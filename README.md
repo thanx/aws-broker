@@ -33,6 +33,45 @@ Message processing is not part of this gem - we recommend using
     # publish message to topic
     Broker.publish(topic, message)
 
+### Rails Support
+
+Though AWS Broker does not require Rails, an ActiveRecord extension and
+accompanying RSpec matcher is provided if the project is Rails. This simplifies
+the process of publishing events for ActiveRecord create, update, and destroy
+callbacks.
+
+    # app/models/user.rb
+    class User < ActiveRecord::Base
+      publish_event :create, :update, :destroy
+    end
+
+    # spec/rails_helper.rb
+    require 'aws/broker/matchers'
+
+    # spec/models/user_spec.rb
+    describe User do
+      context 'publish' do
+        subject { User }
+        it { should publish_event(:create) }
+        it { should publish_event(:update) }
+        it { should publish_event(:destroy) }
+      end
+    end
+
+This essentially abstracts the following:
+
+    # app/models/user.rb
+    class User < ActiveRecord::Base
+      after_commit on: :create do
+        Broker.publish(:user, event: :create, id: id)
+      end
+    end
+
+Queues are determined automatically:
+
+    class User            # queue :user
+    class User::Facebook  # queue :user_facebook
+
 ### Configuration
 
 #### Broker Options
