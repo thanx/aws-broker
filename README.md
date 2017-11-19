@@ -16,7 +16,7 @@ Message processing is not part of this gem - we recommend using
 
     gem 'aws-broker'
 
-### Usage
+### Basic Usage
 
     Broker = Aws::Broker
     topic = 'topic'
@@ -33,17 +33,34 @@ Message processing is not part of this gem - we recommend using
     # publish message to topic
     Broker.publish(topic, message)
 
-### Rails Support
+### Rails Usage
 
 Though AWS Broker does not require Rails, an ActiveRecord extension and
 accompanying RSpec matcher is provided if the project is Rails. This simplifies
 the process of publishing events for ActiveRecord create, update, and destroy
 callbacks.
 
+    ## Publishing
+
     # app/models/user.rb
     class User < ActiveRecord::Base
       publish_event :create, :update, :destroy
     end
+
+    ## Subscribing
+
+    # app/subscribers/user_subscriber.rb
+    class UserSubscriber < Shoryuken::Subscriber
+      self.resource_class = 'User'
+
+      def create;  ... end
+
+      def update;  ... end
+
+      def destroy; ... end
+    end
+
+    ## Testing
 
     # spec/rails_helper.rb
     require 'aws/broker/matchers'
@@ -58,51 +75,10 @@ callbacks.
       end
     end
 
-This essentially abstracts the following:
+### Usage Details
 
-    # app/models/user.rb
-    class User < ActiveRecord::Base
-      after_commit on: :create do
-        Broker.publish(:user, event: :create, id: id)
-      end
-    end
-
-Queues are determined automatically:
-
-    class User            # queue :user
-    class User::Facebook  # queue :user_facebook
-
-### Configuration
-
-#### Broker Options
-
-Aws::Broker can be configured via the following:
-
-    Aws::Broker.configure do |config|
-      config.enabled      = false
-      config.queue_prefix = 'prefix'
-    end
-
-The following options are available:
-
-| Option         | Default | Description                                      |
-|----------------|---------|--------------------------------------------------|
-| `enabled`      | true    | if false, don't trigger API calls to AWS         |
-| `queue_prefix` | nil     | prefix for default queue name (prefix-topic)     |
-
-#### AWS Client
-
-AWS Broker wraps the AWS SQS and SNS clients. All configuration is the same as
-the AWS SDK. See
-[Configuring the AWS SDK for Ruby](http://docs.aws.amazon.com/sdk-for-ruby/v3/developer-guide/setup-config.html)
-for details.
-
-Some supported options:
-
-* `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION` env variables
-* shared `~/.aws/credentials` file
-* IAM
-* `Aws.config[:credentials]`
+See the [wiki](https://github.com/Thanx/aws-broker/wiki) for an in-depth
+overview of usage and configuration options.
 
 ### Inspiration
 
