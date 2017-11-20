@@ -16,7 +16,7 @@ Message processing is not part of this gem - we recommend using
 
     gem 'aws-broker'
 
-### Usage
+### Basic Usage
 
     Broker = Aws::Broker
     topic = 'topic'
@@ -33,37 +33,52 @@ Message processing is not part of this gem - we recommend using
     # publish message to topic
     Broker.publish(topic, message)
 
-### Configuration
+### Rails Usage
 
-#### Broker Options
+Though AWS Broker does not require Rails, an ActiveRecord extension and
+accompanying RSpec matcher is provided if the project is Rails. This simplifies
+the process of publishing events for ActiveRecord create, update, and destroy
+callbacks.
 
-Aws::Broker can be configured via the following:
+    ## Publishing
 
-    Aws::Broker.configure do |config|
-      config.enabled      = false
-      config.queue_prefix = 'prefix'
+    # app/models/user.rb
+    class User < ActiveRecord::Base
+      publish_event :create, :update, :destroy
     end
 
-The following options are available:
+    ## Subscribing
 
-| Option         | Default | Description                                      |
-|----------------|---------|--------------------------------------------------|
-| `enabled`      | true    | if false, don't trigger API calls to AWS         |
-| `queue_prefix` | nil     | prefix for default queue name (prefix-topic)     |
+    # app/subscribers/user_subscriber.rb
+    class UserSubscriber < Shoryuken::Subscriber
+      self.resource_class = 'User'
 
-#### AWS Client
+      def create;  ... end
 
-AWS Broker wraps the AWS SQS and SNS clients. All configuration is the same as
-the AWS SDK. See
-[Configuring the AWS SDK for Ruby](http://docs.aws.amazon.com/sdk-for-ruby/v3/developer-guide/setup-config.html)
-for details.
+      def update;  ... end
 
-Some supported options:
+      def destroy; ... end
+    end
 
-* `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION` env variables
-* shared `~/.aws/credentials` file
-* IAM
-* `Aws.config[:credentials]`
+    ## Testing
+
+    # spec/rails_helper.rb
+    require 'aws/broker/matchers'
+
+    # spec/models/user_spec.rb
+    describe User do
+      context 'publish' do
+        subject { User }
+        it { should publish_event(:create) }
+        it { should publish_event(:update) }
+        it { should publish_event(:destroy) }
+      end
+    end
+
+### Usage Details
+
+See the [wiki](https://github.com/Thanx/aws-broker/wiki) for an in-depth
+overview of usage and configuration options.
 
 ### Inspiration
 
