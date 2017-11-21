@@ -40,27 +40,23 @@ accompanying RSpec matcher is provided if the project is Rails. This simplifies
 the process of publishing events for ActiveRecord create, update, and destroy
 callbacks.
 
-    ## Publishing
+#### Publishing
 
     # app/models/user.rb
     class User < ActiveRecord::Base
       publish_event :create, :update, :destroy
     end
 
-    ## Subscribing
+The above is essentially shorthand for
 
-    # app/subscribers/user_subscriber.rb
-    class UserSubscriber < Shoryuken::Subscriber
-      self.resource_class = 'User'
-
-      def create;  ... end
-
-      def update;  ... end
-
-      def destroy; ... end
+    # app/models/user.rb
+    class User < ActiveRecord::Base
+      after_commit on: :create do
+        Broker.publish(:user, event: :create, id: id)
+      end
     end
 
-    ## Testing
+#### Testing
 
     # spec/rails_helper.rb
     require 'aws/broker/matchers'
