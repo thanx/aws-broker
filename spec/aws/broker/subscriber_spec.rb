@@ -46,14 +46,79 @@ describe Aws::Broker::Subscriber do
     context 'enabled?' do
       before { Aws::Broker.config.enabled = true }
 
-      it 'creates queue' do
-        expect(sqs).to receive(:create_queue).with(queue_name: queue)
-        subscriber.subscribe
+      context 'queue' do
+        it 'creates queue' do
+          expect(sqs).to receive(:create_queue).with(queue_name: queue)
+          subscriber.subscribe
+        end
+
+        context 'default queue' do
+          let(:params) { [ topic ] }
+
+          it 'uses topic name' do
+            expect(sqs).to receive(:create_queue).with(queue_name: topic)
+            subscriber.subscribe
+          end
+
+          context 'queue_prefix config' do
+            before { Aws::Broker.config.queue_prefix = 'prefix' }
+            after  { Aws::Broker.config.queue_prefix = nil }
+
+            it 'uses queue prefix' do
+              expect(sqs).to receive(:create_queue).with(
+                queue_name: 'prefix-topic'
+              )
+              subscriber.subscribe
+            end
+          end
+
+          context 'topic_prefix config' do
+            before { Aws::Broker.config.topic_prefix = 'prefix' }
+            after  { Aws::Broker.config.topic_prefix = nil }
+
+            it 'uses topic prefix' do
+              expect(sqs).to receive(:create_queue).with(
+                queue_name: 'prefix:topic'
+              )
+              subscriber.subscribe
+            end
+          end
+
+          context 'both queue and topic prefix config' do
+            before do
+              Aws::Broker.config.queue_prefix = 'qpfx'
+              Aws::Broker.config.topic_prefix = 'tpfx'
+            end
+            after do
+              Aws::Broker.config.queue_prefix = nil
+              Aws::Broker.config.topic_prefix = nil
+            end
+
+            it 'uses topic prefix' do
+              expect(sqs).to receive(:create_queue).with(
+                queue_name: 'qpfx-tpfx:topic'
+              )
+              subscriber.subscribe
+            end
+          end
+        end
       end
 
-      it 'creates topic' do
-        expect(sns).to receive(:create_topic).with(name: topic)
-        subscriber.subscribe
+      context 'topic' do
+        it 'creates topic' do
+          expect(sns).to receive(:create_topic).with(name: topic)
+          subscriber.subscribe
+        end
+
+        context 'topic_prefix config' do
+          before { Aws::Broker.config.topic_prefix = 'prefix' }
+          after  { Aws::Broker.config.topic_prefix = nil }
+
+          it 'ensures prefixed topic is created' do
+            expect(sns).to receive(:create_topic).with(name: 'prefix:topic')
+            subscriber.subscribe
+          end
+        end
       end
 
       it 'subscribes' do

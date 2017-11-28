@@ -6,6 +6,7 @@ describe Aws::Broker::Config do
 
   it { should have_attr_accessor(:enabled) }
   it { should have_attr_accessor(:queue_prefix) }
+  it { should have_attr_accessor(:topic_prefix) }
   it { expect(subject.method(:enabled?)).to eq(subject.method(:enabled)) }
 
 end

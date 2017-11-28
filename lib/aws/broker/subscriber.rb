@@ -26,9 +26,9 @@ module Aws
 
       def queue_name
         if config.queue_prefix
-          "#{config.queue_prefix}-#{@topic}"
+          "#{config.queue_prefix}-#{topic_name}"
         else
-          @topic
+          topic_name
         end
       end
 

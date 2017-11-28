@@ -9,7 +9,15 @@ module Aws
       end
 
       def create_topic
-        @topic_arn = sns.create_topic(name: @topic).topic_arn
+        @topic_arn = sns.create_topic(name: topic_name).topic_arn
+      end
+
+      def topic_name
+        if config.topic_prefix
+          "#{config.topic_prefix}:#{@topic}"
+        else
+          @topic
+        end
       end
 
       def sns

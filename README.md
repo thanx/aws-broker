@@ -26,8 +26,7 @@ Message processing is not part of this gem - we recommend using
     # subscribe topic to specified queue
     Broker.subscribe(topic, queue)
 
-    # subscribe topic to default queue
-    #   "topic" or "prefix-topic" (see options)
+    # subscribe topic to default queue (see wiki)
     Broker.subscribe(topic)
 
     # publish message to topic
