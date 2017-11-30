@@ -12,13 +12,18 @@ module Aws
           method_name = :"publish_event_#{event}"
           define_method method_name do
             Broker.publish(
-              self.class.to_s.underscore.tr('/', '_'),
+              @publish_topic || self.class.to_s.underscore.tr('/', '_'),
               event: event,
               id:    id
             )
           end
           after_commit method_name, on: event
         end
+      end
+
+      # optional override of default topic
+      def publish_topic=(topic)
+        @publish_topic = topic
       end
 
     end
