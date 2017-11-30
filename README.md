@@ -44,6 +44,8 @@ callbacks.
     # app/models/user.rb
     class User < ActiveRecord::Base
       publish_event :create, :update, :destroy
+      # optionally override default topic name
+      # self.publish_topic = :prefixed_user
     end
 
 The above is essentially shorthand for
