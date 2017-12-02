@@ -78,7 +78,7 @@ describe Aws::Broker::Subscriber do
 
             it 'uses topic prefix' do
               expect(sqs).to receive(:create_queue).with(
-                queue_name: 'prefix:topic'
+                queue_name: 'prefix_topic'
               )
               subscriber.subscribe
             end
@@ -96,7 +96,7 @@ describe Aws::Broker::Subscriber do
 
             it 'uses topic prefix' do
               expect(sqs).to receive(:create_queue).with(
-                queue_name: 'qpfx-tpfx:topic'
+                queue_name: 'qpfx-tpfx_topic'
               )
               subscriber.subscribe
             end
@@ -115,7 +115,7 @@ describe Aws::Broker::Subscriber do
           after  { Aws::Broker.config.topic_prefix = nil }
 
           it 'ensures prefixed topic is created' do
-            expect(sns).to receive(:create_topic).with(name: 'prefix:topic')
+            expect(sns).to receive(:create_topic).with(name: 'prefix_topic')
             subscriber.subscribe
           end
         end

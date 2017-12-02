@@ -52,7 +52,7 @@ describe Aws::Broker::Publisher do
           after  { Aws::Broker.config.topic_prefix = nil }
 
           it 'ensures prefixed topic is created' do
-            expect(sns).to receive(:create_topic).with(name: 'prefix:topic')
+            expect(sns).to receive(:create_topic).with(name: 'prefix_topic')
             publisher.publish
           end
         end
