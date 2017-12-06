@@ -13,7 +13,7 @@ RSpec::Matchers.define :publish_event do |event|
     object = klass.new
     allow(object).to receive(:id) { 0 }
     expect(Broker).to receive(:publish).with(
-      klass.to_s.underscore.tr('/','_'),
+      klass.publish_topic,
       event: event,
       id:    0
     )
