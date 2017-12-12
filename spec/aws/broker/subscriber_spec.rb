@@ -9,8 +9,14 @@ describe Aws::Broker::Subscriber do
   let(:queue) { 'queue' }
 
   before do
+    Aws::Broker.config.queue_prefix = 'qpfx'
+    Aws::Broker.config.topic_prefix = 'tpfx'
     allow(Aws::SNS::Client).to receive(:new) { sns }
     allow(Aws::SQS::Client).to receive(:new) { sqs }
+  end
+  after do
+    Aws::Broker.config.queue_prefix = nil
+    Aws::Broker.config.topic_prefix = nil
   end
 
   let(:sns) {
@@ -56,68 +62,18 @@ describe Aws::Broker::Subscriber do
           let(:params) { [ topic ] }
 
           it 'uses topic name' do
-            expect(sqs).to receive(:create_queue).with(queue_name: topic)
+            expect(sqs).to receive(:create_queue).with(
+              queue_name: 'qpfx-tpfx_topic'
+            )
             subscriber.subscribe
-          end
-
-          context 'queue_prefix config' do
-            before { Aws::Broker.config.queue_prefix = 'prefix' }
-            after  { Aws::Broker.config.queue_prefix = nil }
-
-            it 'uses queue prefix' do
-              expect(sqs).to receive(:create_queue).with(
-                queue_name: 'prefix-topic'
-              )
-              subscriber.subscribe
-            end
-          end
-
-          context 'topic_prefix config' do
-            before { Aws::Broker.config.topic_prefix = 'prefix' }
-            after  { Aws::Broker.config.topic_prefix = nil }
-
-            it 'uses topic prefix' do
-              expect(sqs).to receive(:create_queue).with(
-                queue_name: 'prefix_topic'
-              )
-              subscriber.subscribe
-            end
-          end
-
-          context 'both queue and topic prefix config' do
-            before do
-              Aws::Broker.config.queue_prefix = 'qpfx'
-              Aws::Broker.config.topic_prefix = 'tpfx'
-            end
-            after do
-              Aws::Broker.config.queue_prefix = nil
-              Aws::Broker.config.topic_prefix = nil
-            end
-
-            it 'uses topic prefix' do
-              expect(sqs).to receive(:create_queue).with(
-                queue_name: 'qpfx-tpfx_topic'
-              )
-              subscriber.subscribe
-            end
           end
         end
       end
 
       context 'topic' do
         it 'creates topic' do
-          expect(sns).to receive(:create_topic).with(name: topic)
+          expect(sns).to receive(:create_topic).with(name: 'tpfx_topic')
           subscriber.subscribe
-        end
-
-        context 'topic_prefix config' do
-          before { Aws::Broker.config.topic_prefix = 'prefix' }
-          after  { Aws::Broker.config.topic_prefix = nil }
-
-          it 'ensures prefixed topic is created' do
-            expect(sns).to receive(:create_topic).with(name: 'prefix_topic')
-            subscriber.subscribe
-          end
         end
       end
 

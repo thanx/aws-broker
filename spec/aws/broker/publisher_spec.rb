@@ -8,7 +8,12 @@ describe Aws::Broker::Publisher do
   let(:message) { { id: 0 } }
 
   before do
+    Aws::Broker.config.topic_prefix = 'tpfx'
     allow(Aws::SNS::Client).to receive(:new) { sns }
+  end
+
+  after do
+    Aws::Broker.config.topic_prefix = nil
   end
 
   let(:sns) {
@@ -41,21 +46,9 @@ describe Aws::Broker::Publisher do
         publisher.publish
       end
 
-      context 'topic' do
-        it 'ensures topic is created' do
-          expect(sns).to receive(:create_topic).with(name: topic)
-          publisher.publish
-        end
-
-        context 'topic_prefix config' do
-          before { Aws::Broker.config.topic_prefix = 'prefix' }
-          after  { Aws::Broker.config.topic_prefix = nil }
-
-          it 'ensures prefixed topic is created' do
-            expect(sns).to receive(:create_topic).with(name: 'prefix_topic')
-            publisher.publish
-          end
-        end
+      it 'ensures topic is created' do
+        expect(sns).to receive(:create_topic).with(name: 'tpfx_topic')
+        publisher.publish
       end
     end
   end

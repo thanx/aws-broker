@@ -1,4 +1,5 @@
 require 'aws/broker/config'
+require 'aws/broker/naming'
 require 'aws/broker/publisher'
 require 'aws/broker/subscriber'
 
@@ -12,6 +13,10 @@ module Aws
 
       def subscribe(*params)
         Subscriber.new(*params).subscribe
+      end
+
+      def naming
+        Naming.new
       end
 
       def config

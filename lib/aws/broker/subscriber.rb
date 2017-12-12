@@ -25,11 +25,7 @@ module Aws
     private
 
       def queue_name
-        if config.queue_prefix
-          "#{config.queue_prefix}-#{topic_name}"
-        else
-          topic_name
-        end
+        naming.queue(@topic)
       end
 
       def create_queue
