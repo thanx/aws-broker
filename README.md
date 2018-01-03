@@ -4,7 +4,7 @@
 
 * * *
 
-[![CircleCI](https://circleci.com/gh/Thanx/aws-broker.svg?style=svg)](https://circleci.com/gh/Thanx/aws-broker)
+[![CircleCI](https://circleci.com/gh/thanx/aws-broker.svg?style=svg)](https://circleci.com/gh/thanx/aws-broker)
 
 ### Background
 
@@ -74,7 +74,7 @@ The above is essentially shorthand for
 
 ### Usage Details
 
-See the [wiki](https://github.com/Thanx/aws-broker/wiki) for an in-depth
+See the [wiki](https://github.com/thanx/aws-broker/wiki) for an in-depth
 overview of usage and configuration options.
 
 ### Inspiration
