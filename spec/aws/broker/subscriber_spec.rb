@@ -11,8 +11,8 @@ describe Aws::Broker::Subscriber do
   before do
     Aws::Broker.config.queue_prefix = 'qpfx'
     Aws::Broker.config.topic_prefix = 'tpfx'
-    allow(Aws::SNS::Client).to receive(:new) { sns }
-    allow(Aws::SQS::Client).to receive(:new) { sqs }
+    Aws::Broker.config.sns = sns
+    Aws::Broker.config.sqs = sqs
   end
   after do
     Aws::Broker.config.queue_prefix = nil

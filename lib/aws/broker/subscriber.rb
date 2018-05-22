@@ -74,9 +74,12 @@ module Aws
       end
 
       def sqs
-        @sqs ||= Aws::SQS::Client.new
+        config.sqs
       end
 
+      def config
+        Broker.config
+      end
     end
   end
 end
