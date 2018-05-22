@@ -22,7 +22,7 @@ module Aws
       end
 
       def sns
-        @sns ||= Aws::SNS::Client.new
+        config.sns
       end
 
       def config

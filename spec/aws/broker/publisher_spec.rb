@@ -9,7 +9,7 @@ describe Aws::Broker::Publisher do
 
   before do
     Aws::Broker.config.topic_prefix = 'tpfx'
-    allow(Aws::SNS::Client).to receive(:new) { sns }
+    Aws::Broker.config.sns = sns
   end
 
   after do
