@@ -3,7 +3,7 @@ $:.push File.expand_path('../lib', __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = 'aws-broker'
-  s.version     = '0.0.10'
+  s.version     = '0.0.11'
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['Eng @ Thanx']
   s.email       = 'eng@thanx.com'
