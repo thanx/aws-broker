@@ -13,8 +13,9 @@ module Aws
           define_method method_name do
             Broker.publish(
               self.class.publish_topic,
-              event: event,
-              id:    id
+              event:      event,
+              id:         id,
+              attributes: attributes
             )
           end
           after_commit method_name, on: event
