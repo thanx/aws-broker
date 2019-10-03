@@ -14,8 +14,9 @@ RSpec::Matchers.define :publish_event do |event|
     allow(object).to receive(:id) { 0 }
     expect(Broker).to receive(:publish).with(
       klass.publish_topic,
-      event: event,
-      id:    0
+      event:      event,
+      id:         0,
+      attributes: kind_of(Hash)
     )
     object.send(filter)
     true
