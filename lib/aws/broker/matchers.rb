@@ -7,8 +7,6 @@ RSpec::Matchers.define :publish_event do |event|
     expect(callback).to be
     # assert after_commit
     expect(callback.kind).to eq(:after)
-    # assert after commit event type
-    expect(callback.instance_variable_get(:@if)[0]).to include("[:#{event}]")
     # assert broker call is triggered
     object = klass.new
     allow(object).to receive(:id) { 0 }
